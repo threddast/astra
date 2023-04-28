@@ -10,13 +10,7 @@
   };
 
   ## Modules
-  modules.hardware.fs = {
-    enable = true;
-    ssd.enable = true;
-  };
-
-  # Don't turn off/sleep when closing the lid of the laptop.
-  services.logind.lidSwitch = "ignore";
+  modules.hardware.impermanence.enable = true;
 
   ## CPU
   nix.settings.max-jobs = lib.mkDefault 2;
@@ -26,23 +20,4 @@
   ## Networking
   networking.interfaces.enp0s10.useDHCP = true;
 
-  ## Harddrives
-  fileSystems = {
-    "/" = {
-      device = "/dev/disk/by-label/nixos";
-      fsType = "ext4";
-      options = [ "noatime" ];
-    };
-    "/boot" = {
-      device = "/dev/disk/by-label/BOOT";
-      fsType = "vfat";
-    };
-    "/backup" = {
-      device = "/dev/mapper/backup";
-      fsType = "ext4";
-      options = [ "noatime" "nofail" ];
-    };
-  };
-  boot.initrd.luks.devices.backup.device = "/dev/disk/by-uuid/8839e98a-b1d1-441f-bac3-47dc092685c2";
-  swapDevices = [{ device = "/dev/disk/by-label/swap"; }];
 }
